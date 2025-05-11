@@ -8,7 +8,7 @@ Our lab network diagram will look like this when we are done:
 
 We will access the lab through web console user interfaces supplied per student. The link to your web console will be provided in the lab. 
 
-![[USD Web Console UI.png]]
+![USD Web Console UI](assets/USDWebConsoleUI.png)
 
 ## Todo: Connect to your lab instance web console
 
@@ -54,13 +54,13 @@ Kind stands for Kubernetes in Docker. It is a tool for running local Kubernetes 
 
 To find out more about Kind and Kubernetes control plane tools we will use in the lab, like kubectl and helm, please visit:
 
-![[Kind.png]]
+![](assets/Kind.png)
 [Find Out More about Kind](https://kind.sigs.k8s.io/)
 
-![[Kubectl.png]]
+![](assets/Kubectl.png)
 [Find Out More about Kubernetes Command Line Tool](https://kubernetes.io/docs/reference/kubectl/)
 
-![[Helm.png]]
+![](assets/Helm.png)
 [Find Out More about Helm - Kubernetes Package Manager](https://helm.sh/)
 
 #### Run: `create-cluster.sh`
@@ -119,19 +119,19 @@ Kubernetes defines 'services' to assign static IP which load balance to `Endpoin
 
 So how do pods have their network interfaces created and IP addresses assigned? This is the role of a CNI (container network interface) plugins. We need to 'install a CNI' which will watch when Kubernetes schedules a pod and then create the new pod's network connection to the host and give it an IP address which works in the 'pod network' for the cluster.
 
-![[CNI.png]]
+![](assets/CNI.png)
 [Find out more about CNI Plugins](https://www.cni.dev/)
 
 Our nodes will not become ready for use because, so far, because they do not have a network provider CNI installed to meet their networking requirements. Let's deploy Calico CNI, a popular network plugin which provides network interfaces and IP addresses to containers as Kubernetes schedules them.
 
-![[Calico.png]]
+![](assets/Calico.png)
 [Find out more about Calico CNI Plugin](https://docs.tigera.io/calico/latest/about)
 
 By default, a pod will get only one network interface, `eth0`, and one pod network IP address. What do we do if we ant to add additional network interfaces to our pods for things like BIG-IP proxies to handle traffic?
 
 We will also deploy an additional CNI plugin called Multus.  Multus controls the creation of additional network interfaces to Kubernetes pods and how they attachment to host networking. Multus abstracts what kind and the name of the host network to attach to through a `NetworkAttachementDefinition` resource declaration. 
 
-![[Multus.png]]
+![](assets/Multus.png)
 [Find out more about Multus CNI Plugin](https://github.com/k8snetworkplumbingwg/multus-cni/blob/master/README.md)
 #### Run: `deploy-cni.sh`
 
@@ -228,7 +228,7 @@ a7e18706eb7a   host      host      local
 
 Here is where we are now:
 
-![[KinD Deployed Lab Environment.png]]
+![](assets/KinDDeployedLabEnvironment.png)
 
 ## Todo: Create the lab networks in our virtual machine
 
@@ -273,7 +273,7 @@ c23770001ba1   kind               bridge    local
 
 Our lab network now looks like this
 
-![[All Docker Networks in Lab Environment.png]]
+![](assets/AllDockerNetworksinLabEnvironment.png)
 
 
 We'll use Multus `NetworkAttachmentDefinition` to connect our BIG-IP pods to the `external` and `internal` networks in the diagram above. We define `NetworkAttachmentDefinition` so when pods are created on nodes which are supposed to have Multus attach additional network interfaces, the Multus process on each node knows what type of network and what network name to give it inside our pod. Think of `NetworkAttachmentDefinition` as our policy to figure out how to create these interfaces in our pods.
@@ -333,7 +333,7 @@ BIG-IP Next for Kubernetes can be connected in multiple ways.
    
    DPUs present standalone SoC (system on a chip) processors with their own network connectivity options. Currently, BIG-IP Next for Kubernetes is supported on 
    NVIDIA BlueField-3 DPUs where connectivity is established using NVIDIA DOCA network acceleration APIs. F5's NVIDIA BlueField-3 integration directly connects BIG-IP to the hardware eSwtich on the DPU through the use of DOCA 'scalable functions'. This enables the BIG-IP on each DPU to process traffic for all connected workloads running on the host with the DPU installed.
-   ![[BIG-IP on DPU.png]]
+   ![](assets/BIG-IPonDPU.png)
    
    A full installation guide for the host node and the NVIDIA BlueField-3 DPU for use with BIG-IP Next for Kubernetes has been create [here](https://f5devcentral.github.io/f5-bnk-nvidia-bf3-installations/).
    
@@ -341,7 +341,7 @@ BIG-IP Next for Kubernetes can be connected in multiple ways.
    
    DPDK (data plane development kit) was developed as a standard for accelerated network access for user processes (called execution units) which pre-allocates network devices, compute cores and memory for network processing. Network data access is done through data polling of dedicated queues associated with the assigned network interfaces. The host kernel is offloaded from interrupt handlers associated with the DPDK dedicated network interfaces. Depending on the user process used for networking, this can greatly improves network processing rates and lower network latency. BIG-IP Next data plane is a full proxy stack from the DPDK network interface driver through full application protocols like HTTP. 
    
-   ![[BIG-IP on DPDK.png]]
+   ![](assets/BIG-IPonDPDK.png)
    
 3) Connecting through a host linux kernel networking
    
@@ -349,7 +349,7 @@ BIG-IP Next for Kubernetes can be connected in multiple ways.
    
    Alternatively, in test environments, BIG-IP Next can be provided virtual networking interfaces in much the same was as they are provided to virtual machines. Our lab will take advantage of a software virtual network interface of type MACVLAN. You can see this in our Multus `NetworkAttachmentDefinition`.
    
-   ![[BIG-IP on Linux Netdev.png]]
+   ![](assets/BIG-IPonLinuxNetdev.png)
 
 ## Todo: Create a router and a client container in our virtual machine
 
@@ -357,7 +357,7 @@ All we need to do is build a router and connect it to the right networks and bui
 
 We will deploy the open source Free Range Routing (FRR), `infra-frr-1`, a collection of open source daemons which create a router.  There is a community containerized version. We will attach it to the `external-net` and `infra_client-net` docker networks.
 
-![[FRRouter.png]]
+![](assets/FRRouter.png)
 [Find out more about FRRouting](https://docs.frrouting.org/)
 
 We will deploy a simple nginx demo container, `infra-client-1`, which will function as both our client and a simple way to observe egress traffic. 
@@ -380,6 +380,6 @@ Deploy FRR and client docker container ...
 
 Now our lab environment looks like this.
 
-![[Infrastructure Router and Client in Lab Environment.png]]
+![](assets/InfrastructureRouterandClientinLabEnvironment.png)
 
 Our lab environment is complete. It mirrors all the standard components of a Kubernetes environment. It is now time to deploy BIG-IP Next for Kubernetes.
