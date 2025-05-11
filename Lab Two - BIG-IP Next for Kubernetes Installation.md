@@ -2,7 +2,7 @@
 BIG-IP Next for Kubernetes in GA (general availability) is organizing the installation into the OLM (operator lifecycle manager) compliant operator you will see in these steps. 
 ##### STAY CALM and Lab On!
 
-![[OLM Operators.png]]
+![](assets/OLMOperators.png)
 
 [Learn more about OLM Operators](https://olm.operatorframework.io/)
 
@@ -11,7 +11,7 @@ There are a couple of prerequisites for our lab we are going to install.
 
 First, for zero-trust communication between services, we will need a way to issue certificates.  There is a common open source component which is included in many Kubernetes distributions, but we will install it here. It is cert-manager.
 
-![[cert-manager.png]]
+![](assets/cert-manager.png)
 
 [Learn more about cert-manager](https://cert-manager.io/)
 #### Run: `create-cert-manager.sh`
@@ -60,17 +60,17 @@ BIG-IP Next for Kubernetes used the CNCF Gateway APIs. We need to install the re
 
 We will also install Prometheus and Grafana so we can collect metrics and look at some telemetry dashboards in the next lab. 
 
-![[Prometheus.png]]
+![](assets/Prometheus.png)
 
 [Learn more about Prometheus](https://prometheus.io/)
 
-![[Grafana.png]]
+![](assets/Grafana.png)
 
 [Learn more about Grafana](https://github.com/grafana/grafana/blob/main/README.md)
 
 We will create a certificate for the BIG-IP Next OTEL service so it can communicate securely.
 
-![[OpenTelemetry.png]]
+![](assets/OpenTelemetry.png)
 
 [Learn more about OTEL](https://opentelemetry.io/)
 #### Run: `deploy-gatewayapi-telemetry.sh`
@@ -170,7 +170,7 @@ We need to create a way for clients outside the cluster to create secured commun
 
 These credentials will be stored in Kubernetes secrets, but we will also copy the credentials to files in the virtual machine host so we can use them for a demonstration an debug API access. We will do this in lab three.
 
-![[CWC Auth generation for debug API.png]]
+![](assets/CWCAuthgenerationfordebugAPI.png)
 
 We need to create these credentials before we install everything for BIG-IP Next.
 #### Run: `install-cwc.sh`
@@ -247,15 +247,15 @@ orchestrator-f5cbc78cf-kfgxx        1/1     Running   0          1m
 
 Wow.. label nodes for BIG-IP Next installation.. install the orchestration.. BOOM.. Install. 
 
-![[BIG-IP Installed Lab Environment.png]]
+![](assets/BIG-IPInstalledLabEnvironment.png)
 ### Class Discuss: BIG-IP Next for Kubernetes on NVIDIA DPU nodes
 In the above installation we labeled two nodes and pretty much dedicated these nodes to BIG-IP Next. We don't need to do this, but this illustrates how a NVIDIA DPUs would look. 
 
-![[BIG-IP Next on NVIDIA BF-3 Diagram.png]]
+![](assets/BIG-IPNextonNVIDIABF-3Diagram.png)
 
 When you enable the NVIDIA BlueField-3 in DPU mode, it shows up as a separate node in your cluster. We label those nodes the same way we did in our install and the operator does the install as it would.
 
-![[BIG-IP Next on NVIDIA BF-3 Kubernetes Nodes.png]]
+![](assets/BIG-IPNextonNVIDIABF-3KubernetesNodes.png)
 ## Todo: Create Kubernetes tenant networks for ingress and egress
 
 #### Run: `create-tenants.sh`
@@ -317,7 +317,7 @@ f5biglogprofile.k8s.f5net.com/logprofile created
 
 We just created ingress and egress network for blue and red tenants.
 
-![[Tenant Ingress and Egress Networks.png]]
+![](assets/TenantIngressandEgressNetworks.png)
 
 We successfully install BIG-IP Next for Kubernetes and setup two infrastructure tenant networks. 
 
