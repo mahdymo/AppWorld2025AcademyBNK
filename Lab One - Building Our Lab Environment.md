@@ -2,7 +2,7 @@ BIG-IP Next for Kubernetes is modular and can be deployed at various scales in .
 
 Our lab network diagram will look like this when we are done:
 
-![Complete Lab Env.](assets/Completed Lab Environment.png)
+![Complete Lab Env.]("assets/Completed Lab Environment.png")
 
 
 
